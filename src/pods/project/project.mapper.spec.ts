@@ -248,4 +248,82 @@ describe('project mapper spec', () => {
     // Assert
     expect(result).toEqual(apiData);
   });
+
+  it('Should not break down id employees is an empty array', () => {
+    // Arrange
+    const modelData: apiModel.Project = {
+      id: 'hbo',
+      name: 'Mike',
+      externalId: 'hboExternal',
+      comments: 'hello',
+      isActive: true,
+      employees: [],
+    };
+    const apiData: viewModel.Project = {
+      id: 'hbo',
+      name: 'Mike',
+      externalId: 'hboExternal',
+      comments: 'hello',
+      isActive: true,
+      employees: [],
+    };
+
+    // Act
+    const result = mapProjectFromApiToVm(modelData);
+
+    // Assert
+    expect(result).toEqual(apiData);
+  });
+
+  it('Should not break down if employees is array with "undefined', () => {
+    // Arrange
+    const modelData: apiModel.Project = {
+      id: undefined,
+      name: undefined,
+      externalId: undefined,
+      comments: undefined,
+      isActive: undefined,
+      employees: [undefined],
+    };
+    const apiData: viewModel.Project = {
+      id: undefined,
+      name: undefined,
+      externalId: undefined,
+      comments: undefined,
+      isActive: undefined,
+      employees: [],
+    };
+
+    // Act
+    const result = mapProjectFromApiToVm(modelData);
+
+    // Assert
+    expect(result).toEqual(apiData);
+  });
+
+  it('Should not break down if employees is array with "null', () => {
+    // Arrange
+    const modelData: apiModel.Project = {
+      id: undefined,
+      name: undefined,
+      externalId: undefined,
+      comments: undefined,
+      isActive: undefined,
+      employees: [null],
+    };
+    const apiData: viewModel.Project = {
+      id: undefined,
+      name: undefined,
+      externalId: undefined,
+      comments: undefined,
+      isActive: undefined,
+      employees: [],
+    };
+
+    // Act
+    const result = mapProjectFromApiToVm(modelData);
+
+    // Assert
+    expect(result).toEqual(apiData);
+  });
 });

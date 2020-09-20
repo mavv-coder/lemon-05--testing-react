@@ -278,20 +278,22 @@ describe('project mapper spec', () => {
   it('Should not break down if employees is array with "undefined', () => {
     // Arrange
     const modelData: apiModel.Project = {
-      id: undefined,
-      name: undefined,
-      externalId: undefined,
-      comments: undefined,
-      isActive: undefined,
+      id: 'hbo',
+      name: 'Mike',
+      externalId: 'hboExternal',
+      comments: 'hello',
+      isActive: true,
       employees: [undefined],
     };
     const apiData: viewModel.Project = {
-      id: undefined,
-      name: undefined,
-      externalId: undefined,
-      comments: undefined,
-      isActive: undefined,
-      employees: [],
+      id: 'hbo',
+      name: 'Mike',
+      externalId: 'hboExternal',
+      comments: 'hello',
+      isActive: true,
+      employees: [
+        { id: undefined, isAssigned: undefined, employeeName: undefined },
+      ],
     };
 
     // Act
@@ -304,20 +306,22 @@ describe('project mapper spec', () => {
   it('Should not break down if employees is array with "null', () => {
     // Arrange
     const modelData: apiModel.Project = {
-      id: undefined,
-      name: undefined,
-      externalId: undefined,
-      comments: undefined,
-      isActive: undefined,
+      id: 'hbo',
+      name: 'Mike',
+      externalId: 'hboExternal',
+      comments: 'hello',
+      isActive: true,
       employees: [null],
     };
     const apiData: viewModel.Project = {
-      id: undefined,
-      name: undefined,
-      externalId: undefined,
-      comments: undefined,
-      isActive: undefined,
-      employees: [],
+      id: 'hbo',
+      name: 'Mike',
+      externalId: 'hboExternal',
+      comments: 'hello',
+      isActive: true,
+      employees: [
+        { id: undefined, isAssigned: undefined, employeeName: undefined },
+      ],
     };
 
     // Act

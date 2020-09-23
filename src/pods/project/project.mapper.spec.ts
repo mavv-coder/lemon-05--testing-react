@@ -13,7 +13,11 @@ describe('project mapper spec', () => {
       isActive: true,
       employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
     };
-    const modelData: viewModel.Project = {
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    const expectedResult: viewModel.Project = {
       id: 'hbo',
       name: 'Mike',
       externalId: 'hboExternal',
@@ -21,12 +25,7 @@ describe('project mapper spec', () => {
       isActive: true,
       employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
     };
-
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
-
-    // Assert
-    expect(result).toEqual(modelData);
+    expect(result).toEqual(expectedResult);
   });
 
   it('should not break down if "externalId" optional property is not included in apiData', () => {
@@ -311,7 +310,10 @@ describe('project mapper spec', () => {
       externalId: 'hboExternal',
       comments: 'hello',
       isActive: true,
-      employees: [null],
+      employees: [
+        null,
+        { id: 'hbo2', isAssigned: false, employeeName: 'Maria' },
+      ],
     };
     const apiData: viewModel.Project = {
       id: 'hbo',
@@ -321,6 +323,7 @@ describe('project mapper spec', () => {
       isActive: true,
       employees: [
         { id: undefined, isAssigned: undefined, employeeName: undefined },
+        { id: 'hbo2', isAssigned: false, employeeName: 'Maria' },
       ],
     };
 

@@ -184,4 +184,33 @@ describe('confirmation dialog component specs', () => {
     expect(props.onClose).toHaveBeenCalled();
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
+
+  it('only when acceptButton is clicked, onAccept fn should be called one time per click', () => {
+    // Arrange
+    const props = {
+      isOpen: true,
+      onAccept: jest.fn(),
+      onClose: jest.fn(),
+      title: 'test title',
+      labels: {
+        closeButton: 'test close btn',
+        acceptButton: 'test accept btn',
+      },
+    };
+
+    // Act
+    render(<ConfirmationDialogComponent {...props} />);
+
+    const acceptButtonElement = screen.getByRole('button', {
+      name: props.labels.acceptButton,
+    });
+
+    expect(props.onClose).toHaveBeenCalledTimes(0);
+
+    userEvent.click(acceptButtonElement);
+
+    // Assert
+    expect(props.onClose).toHaveBeenCalled();
+    expect(props.onClose).toHaveBeenCalledTimes(1);
+  });
 });

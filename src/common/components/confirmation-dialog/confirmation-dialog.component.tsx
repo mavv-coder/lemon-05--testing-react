@@ -27,7 +27,7 @@ export const ConfirmationDialogComponent: React.FunctionComponent<Props> = props
   };
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen === true}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>

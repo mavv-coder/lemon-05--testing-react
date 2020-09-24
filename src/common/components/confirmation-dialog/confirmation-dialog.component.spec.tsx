@@ -79,4 +79,109 @@ describe('confirmation dialog component specs', () => {
     expect(closeButtonElement).toEqual(null);
     expect(acceptButtonElement).toEqual(null);
   });
+
+  it('should not be displayed when it feeds "isOpen" property with "undefined" value', () => {
+    // Arrange
+    const props = {
+      isOpen: undefined,
+      onAccept: jest.fn(),
+      onClose: jest.fn(),
+      title: 'test title',
+      labels: {
+        closeButton: 'test close btn',
+        acceptButton: 'test accept btn',
+      },
+    };
+
+    // Act
+    render(
+      <ConfirmationDialogComponent {...props}>
+        <span>test children</span>
+      </ConfirmationDialogComponent>
+    );
+
+    const dialogElement = screen.queryByRole('dialog');
+    const dialogTitleElement = screen.queryByText(props.title);
+    const dialogContentElement = screen.queryByText('test children');
+    const closeButtonElement = screen.queryByRole('button', {
+      name: props.labels.closeButton,
+    });
+    const acceptButtonElement = screen.queryByRole('button', {
+      name: props.labels.acceptButton,
+    });
+
+    // Assert
+    expect(dialogElement).toEqual(null);
+    expect(dialogTitleElement).toEqual(null);
+    expect(dialogContentElement).toEqual(null);
+    expect(closeButtonElement).toEqual(null);
+    expect(acceptButtonElement).toEqual(null);
+  });
+
+  it('should not be displayed when it feeds "isOpen" property with "null" value', () => {
+    // Arrange
+    const props = {
+      isOpen: null,
+      onAccept: jest.fn(),
+      onClose: jest.fn(),
+      title: 'test title',
+      labels: {
+        closeButton: 'test close btn',
+        acceptButton: 'test accept btn',
+      },
+    };
+
+    // Act
+    render(
+      <ConfirmationDialogComponent {...props}>
+        <span>test children</span>
+      </ConfirmationDialogComponent>
+    );
+
+    const dialogElement = screen.queryByRole('dialog');
+    const dialogTitleElement = screen.queryByText(props.title);
+    const dialogContentElement = screen.queryByText('test children');
+    const closeButtonElement = screen.queryByRole('button', {
+      name: props.labels.closeButton,
+    });
+    const acceptButtonElement = screen.queryByRole('button', {
+      name: props.labels.acceptButton,
+    });
+
+    // Assert
+    expect(dialogElement).toEqual(null);
+    expect(dialogTitleElement).toEqual(null);
+    expect(dialogContentElement).toEqual(null);
+    expect(closeButtonElement).toEqual(null);
+    expect(acceptButtonElement).toEqual(null);
+  });
+
+  it('only when closeButton is clicked, onClose fn should be called one time per click', () => {
+    // Arrange
+    const props = {
+      isOpen: true,
+      onAccept: jest.fn(),
+      onClose: jest.fn(),
+      title: 'test title',
+      labels: {
+        closeButton: 'test close btn',
+        acceptButton: 'test accept btn',
+      },
+    };
+
+    // Act
+    render(<ConfirmationDialogComponent {...props} />);
+
+    const closeButtonElement = screen.getByRole('button', {
+      name: props.labels.closeButton,
+    });
+
+    expect(props.onClose).toHaveBeenCalledTimes(0);
+
+    userEvent.click(closeButtonElement);
+
+    // Assert
+    expect(props.onClose).toHaveBeenCalled();
+    expect(props.onClose).toHaveBeenCalledTimes(1);
+  });
 });

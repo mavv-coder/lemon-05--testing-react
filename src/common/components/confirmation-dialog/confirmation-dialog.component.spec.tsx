@@ -185,7 +185,7 @@ describe('confirmation dialog component specs', () => {
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('only when acceptButton is clicked, onAccept fn should be called one time per click', () => {
+  it('only when acceptButton is clicked, onAccept and onClose funtions should be called one time per click', () => {
     // Arrange
     const props = {
       isOpen: true,
@@ -206,11 +206,54 @@ describe('confirmation dialog component specs', () => {
     });
 
     expect(props.onClose).toHaveBeenCalledTimes(0);
+    expect(props.onAccept).toHaveBeenCalledTimes(0);
 
     userEvent.click(acceptButtonElement);
 
     // Assert
+    expect(props.onAccept).toHaveBeenCalled();
+    expect(props.onAccept).toHaveBeenCalledTimes(1);
     expect(props.onClose).toHaveBeenCalled();
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
+
+  // it('when acceptButton is clicked, the entire component should not be displayed', () => {
+  //   // Arrange
+  //   const props = {
+  //     isOpen: true,
+  //     onAccept: jest.fn(),
+  //     onClose: jest.fn(),
+  //     title: 'test title',
+  //     labels: {
+  //       closeButton: 'test close btn',
+  //       acceptButton: 'test accept btn',
+  //     },
+  //   };
+
+  //   // Act
+  //   render(
+  //     <ConfirmationDialogComponent {...props}>
+  //       <span>test children</span>
+  //     </ConfirmationDialogComponent>
+  //   );
+  //   const closeButtonElement = screen.getByRole('button', {
+  //     name: props.labels.acceptButton,
+  //   });
+
+  //   userEvent.click(closeButtonElement);
+
+  //   const dialogElement = screen.queryByRole('dialog');
+  //   const dialogTitleElement = screen.queryByText(props.title);
+  //   const dialogContentElement = screen.queryByText('test children');
+  //   const acceptButtonElement = screen.queryByRole('button', {
+  //     name: props.labels.closeButton,
+  //   });
+
+  //   // Assert
+  //   expect(dialogElement).toEqual(null);
+  //   expect(dialogTitleElement).toEqual(null);
+  //   expect(dialogContentElement).toEqual(null);
+  //   expect(closeButtonElement).toEqual(null);
+  //   expect(acceptButtonElement).toEqual(null);
+  // });
 });

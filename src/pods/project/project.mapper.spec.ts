@@ -3,144 +3,139 @@ import * as viewModel from './project.vm';
 import { mapProjectFromApiToVm } from './project.mapper';
 
 describe('project mapper spec', () => {
-  it('should return a clone object with viewModel interface', () => {
+  it('should return a clone object with "viewModel" interface', () => {
     // Arrange
     const apiData: apiModel.Project = {
-      id: 'hbo',
+      id: '01',
       name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
+      externalId: 'test external id',
+      comments: 'test comment',
       isActive: true,
-      employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
-    };
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
-
-    // Assert
-    const expectedResult: viewModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
-      isActive: true,
-      employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
-    };
-    expect(result).toEqual(expectedResult);
-  });
-
-  it('should not break down if "externalId" optional property is not included in apiData', () => {
-    // Arrange
-    const apiData: apiModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      comments: 'hello',
-      isActive: true,
-      employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
-    };
-    const modelData: viewModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      comments: 'hello',
-      isActive: true,
-      employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
+      employees: [{ id: '02', isAssigned: false, employeeName: 'Jane' }],
     };
 
     // Act
     const result: viewModel.Project = mapProjectFromApiToVm(apiData);
 
     // Assert
-    expect(result).toEqual(modelData);
+    expect(result).toEqual<viewModel.Project>({
+      id: '01',
+      name: 'Mike',
+      externalId: 'test external id',
+      comments: 'test comment',
+      isActive: true,
+      employees: [{ id: '02', isAssigned: false, employeeName: 'Jane' }],
+    });
   });
 
-  it('should not break down if "comments" optional property is not included in apiData', () => {
+  it('should not break down when "externalId" optional property is not included in apiData', () => {
     // Arrange
     const apiData: apiModel.Project = {
-      id: 'hbo',
+      id: '01',
       name: 'Mike',
-      externalId: 'hboExternal',
+      comments: 'test comment',
       isActive: true,
-      employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
-    };
-    const modelData: viewModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      externalId: 'hboExternal',
-      isActive: true,
-      employees: [{ id: 'hbo2', isAssigned: false, employeeName: 'Maria' }],
+      employees: [{ id: '02', isAssigned: false, employeeName: 'Jane' }],
     };
 
     // Act
     const result: viewModel.Project = mapProjectFromApiToVm(apiData);
 
     // Assert
-    expect(result).toEqual(modelData);
+    expect(result).toEqual<viewModel.Project>({
+      id: '01',
+      name: 'Mike',
+      comments: 'test comment',
+      isActive: true,
+      employees: [{ id: '02', isAssigned: false, employeeName: 'Jane' }],
+    });
   });
 
-  it('should not break down if "isAssigned" optional property within "employess" property is not included in apiData', () => {
+  it('should not break down when "comments" optional property is not included in apiData', () => {
     // Arrange
     const apiData: apiModel.Project = {
-      id: 'hbo',
+      id: '01',
       name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
+      externalId: 'test external id',
       isActive: true,
-      employees: [{ id: 'hbo2', employeeName: 'Maria' }],
-    };
-    const modelData: viewModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
-      isActive: true,
-      employees: [{ id: 'hbo2', employeeName: 'Maria' }],
+      employees: [{ id: '02', isAssigned: false, employeeName: 'Jane' }],
     };
 
     // Act
     const result: viewModel.Project = mapProjectFromApiToVm(apiData);
 
     // Assert
-    expect(result).toEqual(modelData);
+    expect(result).toEqual<viewModel.Project>({
+      id: '01',
+      name: 'Mike',
+      externalId: 'test external id',
+      isActive: true,
+      employees: [{ id: '02', isAssigned: false, employeeName: 'Jane' }],
+    });
   });
 
-  it('should return a clone empty object with viewModel interface if receiving "undefined"', () => {
+  it('should not break down when "isAssigned" optional property within "employess" property is not included in apiData', () => {
+    // Arrange
+    const apiData: apiModel.Project = {
+      id: '01',
+      name: 'Mike',
+      externalId: 'test external id',
+      comments: 'test comment',
+      isActive: true,
+      employees: [{ id: '02', employeeName: 'Jane' }],
+    };
+
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    expect(result).toEqual<viewModel.Project>({
+      id: '01',
+      name: 'Mike',
+      externalId: 'test external id',
+      comments: 'test comment',
+      isActive: true,
+      employees: [{ id: '02', employeeName: 'Jane' }],
+    });
+  });
+
+  it('should return a clone empty object with "viewModel.Project" interface when receiving "undefined"', () => {
     // Arrange
     const apiData: apiModel.Project = undefined;
-    const modelData: viewModel.Project = {
+
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    expect(result).toEqual<viewModel.Project>({
       id: '',
       name: '',
       externalId: '',
       comments: '',
       isActive: false,
       employees: [],
-    };
-
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
-
-    // Assert
-    expect(result).toEqual(modelData);
+    });
   });
 
-  it('should return a clone empty object with viewModel interface if receiving "null"', () => {
+  it('should return a clone empty object with "viewModel.Project" interface when receiving "null"', () => {
     // Arrange
     const apiData: apiModel.Project = null;
-    const modelData: viewModel.Project = {
+
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    expect(result).toEqual<viewModel.Project>({
       id: '',
       name: '',
       externalId: '',
       comments: '',
       isActive: false,
       employees: [],
-    };
-
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
-
-    // Assert
-    expect(result).toEqual(modelData);
+    });
   });
 
-  it('should not break down if some of the received properties are "null"', () => {
+  it('should not break down when some of the received properties are "null"', () => {
     // Arrange
     const apiData: apiModel.Project = {
       id: null,
@@ -150,23 +145,22 @@ describe('project mapper spec', () => {
       isActive: null,
       employees: [{ id: null, isAssigned: null, employeeName: null }],
     };
-    const modelData: viewModel.Project = {
+
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    expect(result).toEqual<viewModel.Project>({
       id: null,
       name: null,
       externalId: null,
       comments: null,
       isActive: null,
       employees: [{ id: null, isAssigned: null, employeeName: null }],
-    };
-
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
-
-    // Assert
-    expect(result).toEqual(modelData);
+    });
   });
 
-  it('should not break down if some of the received properties are "undefined"', () => {
+  it('should not break down when some of the received properties are "undefined"', () => {
     // Arrange
     const apiData: apiModel.Project = {
       id: undefined,
@@ -178,7 +172,12 @@ describe('project mapper spec', () => {
         { id: undefined, isAssigned: undefined, employeeName: undefined },
       ],
     };
-    const modelData: viewModel.Project = {
+
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    expect(result).toEqual<viewModel.Project>({
       id: undefined,
       name: undefined,
       externalId: undefined,
@@ -187,16 +186,10 @@ describe('project mapper spec', () => {
       employees: [
         { id: undefined, isAssigned: undefined, employeeName: undefined },
       ],
-    };
-
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
-
-    // Assert
-    expect(result).toEqual(modelData);
+    });
   });
 
-  it('should return employees property as an empty array if employees initial value is "null"', () => {
+  it('should return "employees" property as an empty array when "employees" initial value is "null"', () => {
     // Arrange
     const apiData: apiModel.Project = {
       id: null,
@@ -206,25 +199,24 @@ describe('project mapper spec', () => {
       isActive: null,
       employees: null,
     };
-    const modelData: viewModel.Project = {
+
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    expect(result).toEqual<viewModel.Project>({
       id: null,
       name: null,
       externalId: null,
       comments: null,
       isActive: null,
       employees: [],
-    };
-
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
-
-    // Assert
-    expect(result).toEqual(modelData);
+    });
   });
 
-  it('should return employees property as an empty array if employees initial value is "undefined"', () => {
+  it('should return "employees" property as an empty array when "employees" initial value is "undefined"', () => {
     // Arrange
-    const apiModel: apiModel.Project = {
+    const apiData: apiModel.Project = {
       id: undefined,
       name: undefined,
       externalId: undefined,
@@ -232,37 +224,28 @@ describe('project mapper spec', () => {
       isActive: undefined,
       employees: undefined,
     };
-    const modelData: viewModel.Project = {
+
+    // Act
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
+
+    // Assert
+    expect(result).toEqual<viewModel.Project>({
       id: undefined,
       name: undefined,
       externalId: undefined,
       comments: undefined,
       isActive: undefined,
       employees: [],
-    };
-
-    // Act
-    const result: viewModel.Project = mapProjectFromApiToVm(apiModel);
-
-    // Assert
-    expect(result).toEqual(modelData);
+    });
   });
 
-  it('should not break down if "employees" property received an empty array', () => {
+  it('should not break down when "employees" property received an empty array', () => {
     // Arrange
     const apiData: apiModel.Project = {
-      id: 'hbo',
+      id: '01',
       name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
-      isActive: true,
-      employees: [],
-    };
-    const modelData: viewModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
+      externalId: 'test external id',
+      comments: 'test comment',
       isActive: true,
       employees: [],
     };
@@ -271,66 +254,79 @@ describe('project mapper spec', () => {
     const result: viewModel.Project = mapProjectFromApiToVm(apiData);
 
     // Assert
-    expect(result).toEqual(modelData);
+    expect(result).toEqual<viewModel.Project>({
+      id: '01',
+      name: 'Mike',
+      externalId: 'test external id',
+      comments: 'test comment',
+      isActive: true,
+      employees: [],
+    });
   });
 
-  it('Should not break down if "employees" property received an array with "undefined"', () => {
+  it('"employees" property should return an object with "undefined" properties when it received an array with some "undefined" values', () => {
     // Arrange
-    const modelData: apiModel.Project = {
-      id: 'hbo',
+    const apiData: apiModel.Project = {
+      id: '01',
       name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
-      isActive: true,
-      employees: [undefined],
-    };
-    const apiData: viewModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
+      externalId: 'test external id',
+      comments: 'test comment',
       isActive: true,
       employees: [
-        { id: undefined, isAssigned: undefined, employeeName: undefined },
+        { id: '02', isAssigned: false, employeeName: 'Jane' },
+        undefined,
+        { id: '03', isAssigned: true, employeeName: 'John' },
       ],
     };
 
     // Act
-    const result = mapProjectFromApiToVm(modelData);
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
 
     // Assert
-    expect(result).toEqual(apiData);
-  });
-
-  it('Should not break down if employees is array with "null', () => {
-    // Arrange
-    const modelData: apiModel.Project = {
-      id: 'hbo',
+    expect(result).toEqual<viewModel.Project>({
+      id: '01',
       name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
+      externalId: 'test external id',
+      comments: 'test comment',
       isActive: true,
       employees: [
+        { id: '02', isAssigned: false, employeeName: 'Jane' },
+        { id: undefined, isAssigned: undefined, employeeName: undefined },
+        { id: '03', isAssigned: true, employeeName: 'John' },
+      ],
+    });
+  });
+
+  it('"employees" property should return an object with "undefined" properties when it received an array with some "null" values', () => {
+    // Arrange
+    const apiData: apiModel.Project = {
+      id: '01',
+      name: 'Mike',
+      externalId: 'test external id',
+      comments: 'test comment',
+      isActive: true,
+      employees: [
+        { id: '02', isAssigned: false, employeeName: 'Jane' },
         null,
-        { id: 'hbo2', isAssigned: false, employeeName: 'Maria' },
-      ],
-    };
-    const apiData: viewModel.Project = {
-      id: 'hbo',
-      name: 'Mike',
-      externalId: 'hboExternal',
-      comments: 'hello',
-      isActive: true,
-      employees: [
-        { id: undefined, isAssigned: undefined, employeeName: undefined },
-        { id: 'hbo2', isAssigned: false, employeeName: 'Maria' },
+        { id: '03', isAssigned: true, employeeName: 'John' },
       ],
     };
 
     // Act
-    const result = mapProjectFromApiToVm(modelData);
+    const result: viewModel.Project = mapProjectFromApiToVm(apiData);
 
     // Assert
-    expect(result).toEqual(apiData);
+    expect(result).toEqual<viewModel.Project>({
+      id: '01',
+      name: 'Mike',
+      externalId: 'test external id',
+      comments: 'test comment',
+      isActive: true,
+      employees: [
+        { id: '02', isAssigned: false, employeeName: 'Jane' },
+        { id: undefined, isAssigned: undefined, employeeName: undefined },
+        { id: '03', isAssigned: true, employeeName: 'John' },
+      ],
+    });
   });
 });

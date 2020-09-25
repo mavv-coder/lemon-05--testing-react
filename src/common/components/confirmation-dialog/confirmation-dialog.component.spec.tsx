@@ -219,7 +219,7 @@ describe('confirmation dialog component specs', () => {
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('when acceptButton is clicked, the entire component should not be displayed', () => {
+  xit('when acceptButton is clicked, the entire component should not be displayed', () => {
     // Arrange
     const { result } = renderHook(() => useConfirmationDialog());
 

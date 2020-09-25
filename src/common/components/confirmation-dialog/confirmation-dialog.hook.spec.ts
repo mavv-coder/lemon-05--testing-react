@@ -4,6 +4,8 @@ import { Lookup } from 'common/models';
 
 describe('confirmation dialog hook specs', () => {
   it('"isOpen" state should be "false" by default', () => {
+    // Arrange
+
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
 
@@ -26,6 +28,8 @@ describe('confirmation dialog hook specs', () => {
   });
 
   it('"onAccept", "onClose" and "onOpenDialog" should be functions by default', () => {
+    // Arrange
+
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
 
@@ -60,10 +64,6 @@ describe('confirmation dialog hook specs', () => {
       id: '007',
       name: 'James Bond',
     };
-    const emptyItem: Lookup = {
-      id: '',
-      name: '',
-    };
 
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
@@ -78,7 +78,10 @@ describe('confirmation dialog hook specs', () => {
     });
 
     // Assert
-    expect(result.current.itemToDelete).toEqual(emptyItem);
+    expect(result.current.itemToDelete).toEqual<Lookup>({
+      id: '',
+      name: '',
+    });
   });
 
   it('when calling "onClose" after calling "onOpenDialog" with an item as parameter, should set "isOpen" to false', () => {

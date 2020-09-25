@@ -4,13 +4,11 @@ import { Lookup } from 'common/models';
 
 describe('confirmation dialog hook specs', () => {
   it('"isOpen" state should be "false" by default', () => {
-    // Arrange
-
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
 
     // Assert
-    expect(result.current.isOpen).toBeFalsy();
+    expect(result.current.isOpen).toEqual(false);
   });
 
   it('"itemToDelete" state should be an empty object with "Lookup" interface by default', () => {
@@ -27,6 +25,16 @@ describe('confirmation dialog hook specs', () => {
     expect(result.current.itemToDelete).toEqual(emptyItem);
   });
 
+  it('"onAccept", "onClose" and "onOpenDialog" should be functions by default', () => {
+    // Act
+    const { result } = renderHook(() => useConfirmationDialog());
+
+    // Assert
+    expect(result.current.onAccept).toEqual(expect.any(Function));
+    expect(result.current.onClose).toEqual(expect.any(Function));
+    expect(result.current.onOpenDialog).toEqual(expect.any(Function));
+  });
+
   it('when calling "onOpenDialog" with an item should change "isOpen" state to "true" and "itemToDelete" to passed item as parameter', () => {
     // Arrange
     const testItem: Lookup = {
@@ -37,7 +45,9 @@ describe('confirmation dialog hook specs', () => {
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
 
-    result.current.onOpenDialog(testItem);
+    act(() => {
+      result.current.onOpenDialog(testItem);
+    });
 
     // Assert
     expect(result.current.isOpen).toEqual(true);
@@ -58,10 +68,14 @@ describe('confirmation dialog hook specs', () => {
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
 
-    result.current.onOpenDialog(testItem);
+    act(() => {
+      result.current.onOpenDialog(testItem);
+    });
     expect(result.current.itemToDelete).toEqual(testItem);
 
-    result.current.onAccept();
+    act(() => {
+      result.current.onAccept();
+    });
 
     // Assert
     expect(result.current.itemToDelete).toEqual(emptyItem);
@@ -77,10 +91,14 @@ describe('confirmation dialog hook specs', () => {
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
 
-    result.current.onOpenDialog(testItem);
+    act(() => {
+      result.current.onOpenDialog(testItem);
+    });
     expect(result.current.isOpen).toEqual(true);
 
-    result.current.onClose();
+    act(() => {
+      result.current.onClose();
+    });
 
     // Assert
     expect(result.current.isOpen).toEqual(false);

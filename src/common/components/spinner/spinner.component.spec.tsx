@@ -1,11 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { SpinnerComponent } from './spinner.component';
+import * as PromiseTracker from 'react-promise-tracker';
 
 describe('spinner component spec', () => {
   it('should be displayed when "promiseInProgress" is "true"', () => {
     // Arrange
-    const promiseInProgress = true;
+    jest
+      .spyOn(PromiseTracker, 'usePromiseTracker')
+      .mockImplementation(() => ({ promiseInProgress: true }));
 
     // Act
     render(<SpinnerComponent />);

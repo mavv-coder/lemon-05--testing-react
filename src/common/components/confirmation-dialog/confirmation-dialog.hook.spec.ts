@@ -15,7 +15,7 @@ describe('confirmation dialog hook specs', () => {
 
   it('"itemToDelete" state should be an empty object with "Lookup" interface by default', () => {
     // Arrange
-    const testLookup: Lookup = {
+    const emptyItem: Lookup = {
       id: '',
       name: '',
     };
@@ -24,6 +24,65 @@ describe('confirmation dialog hook specs', () => {
     const { result } = renderHook(() => useConfirmationDialog());
 
     // Assert
-    expect(result.current.itemToDelete).toEqual(testLookup);
+    expect(result.current.itemToDelete).toEqual(emptyItem);
+  });
+
+  it('when calling "onOpenDialog" with an item should change "isOpen" state to "true" and "itemToDelete" to passed item as parameter', () => {
+    // Arrange
+    const testItem: Lookup = {
+      id: '007',
+      name: 'James Bond',
+    };
+
+    // Act
+    const { result } = renderHook(() => useConfirmationDialog());
+
+    result.current.onOpenDialog(testItem);
+
+    // Assert
+    expect(result.current.isOpen).toEqual(true);
+    expect(result.current.itemToDelete).toEqual(testItem);
+  });
+
+  it('when calling "onAccept" after calling "onOpenDialog" with an item as parameter, should set "itemToDelete" to an empty object', () => {
+    // Arrange
+    const testItem: Lookup = {
+      id: '007',
+      name: 'James Bond',
+    };
+    const emptyItem: Lookup = {
+      id: '',
+      name: '',
+    };
+
+    // Act
+    const { result } = renderHook(() => useConfirmationDialog());
+
+    result.current.onOpenDialog(testItem);
+    expect(result.current.itemToDelete).toEqual(testItem);
+
+    result.current.onAccept();
+
+    // Assert
+    expect(result.current.itemToDelete).toEqual(emptyItem);
+  });
+
+  it('when calling "onClose" after calling "onOpenDialog" with an item as parameter, should set "isOpen" to false', () => {
+    // Arrange
+    const testItem: Lookup = {
+      id: '007',
+      name: 'James Bond',
+    };
+
+    // Act
+    const { result } = renderHook(() => useConfirmationDialog());
+
+    result.current.onOpenDialog(testItem);
+    expect(result.current.isOpen).toEqual(true);
+
+    result.current.onClose();
+
+    // Assert
+    expect(result.current.isOpen).toEqual(false);
   });
 });

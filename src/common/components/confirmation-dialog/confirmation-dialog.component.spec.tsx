@@ -158,7 +158,7 @@ describe('confirmation dialog component specs', () => {
     expect(acceptButtonElement).toEqual(null);
   });
 
-  it('only when closeButton is clicked, onClose fn should be called one time per click', () => {
+  it('only when "closeButton" is clicked, "onClose" function should be called one time per click', () => {
     // Arrange
     const props = {
       isOpen: true,
@@ -187,7 +187,7 @@ describe('confirmation dialog component specs', () => {
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('only when acceptButton is clicked, onAccept and onClose funtions should be called one time per click', () => {
+  it('only when "acceptButton" is clicked, "onAccept" and "onClose" funtions should be called one time per click', () => {
     // Arrange
     const props = {
       isOpen: true,
@@ -219,7 +219,7 @@ describe('confirmation dialog component specs', () => {
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 
-  xit('when acceptButton is clicked, the entire component should not be displayed', () => {
+  xit('when "acceptButton" is clicked, the entire component should not be displayed', () => {
     // Arrange
     const { result } = renderHook(() => useConfirmationDialog());
 

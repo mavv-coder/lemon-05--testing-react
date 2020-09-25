@@ -35,7 +35,7 @@ describe('confirmation dialog hook specs', () => {
     expect(result.current.onOpenDialog).toEqual(expect.any(Function));
   });
 
-  it('when calling "onOpenDialog" with an item should change "isOpen" state to "true" and "itemToDelete" to passed item as parameter', () => {
+  it('when calling "onOpenDialog" with an item as parameter should change "isOpen" state to "true" and "itemToDelete" to the passed item', () => {
     // Arrange
     const testItem: Lookup = {
       id: '007',

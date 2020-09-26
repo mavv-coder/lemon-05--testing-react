@@ -1,19 +1,20 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
 import { render, screen } from '@testing-library/react';
 import { SpinnerComponent } from './spinner.component';
-import { usePromiseTracker } from 'react-promise-tracker';
+import * as promiseTracker from 'react-promise-tracker/lib/trackerHook';
 
 describe('spinner component spec', () => {
   it('should be displayed when "promiseInProgress" is "true"', () => {
     // Arrange
-    const { result } = renderHook(() => usePromiseTracker());
-    result.current.promiseInProgress = true;
-    expect(result.current.promiseInProgress).toEqual(true);
+    jest
+      .spyOn(promiseTracker, 'usePromiseTracker')
+      .mockImplementation(() => ({ promiseInProgress: true }));
 
     // Act
     render(<SpinnerComponent />);
+    const element = screen.getByRole('status');
 
     // Assert
+    expect(element).toBeInTheDocument();
   });
 });

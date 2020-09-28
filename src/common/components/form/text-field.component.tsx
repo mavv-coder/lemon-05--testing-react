@@ -10,6 +10,7 @@ export const TextFieldComponent: React.FunctionComponent<TextFieldProps> = props
   return (
     <MuiTextField
       {...props}
+      id={`name *`}
       name={textFieldProps.name}
       onChange={textFieldProps.onChange}
       onBlur={textFieldProps.onBlur}

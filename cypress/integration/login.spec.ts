@@ -7,7 +7,7 @@ describe('login scene specs', () => {
     // Arrange
 
     // Act
-    cy.get('input[name="user"]').as('userInput');
+    cy.findByRole('textbox').as('userInput');
     cy.get('@userInput').click();
 
     // Asert
@@ -18,7 +18,7 @@ describe('login scene specs', () => {
     // Arrange
 
     // Act
-    cy.get('input[name="password"]').as('passwordInput');
+    cy.findByLabelText('Contraseña *').as('passwordInput');
     cy.get('@passwordInput').click();
 
     // Asert
@@ -30,7 +30,7 @@ describe('login scene specs', () => {
     const errorMsg = 'Debe informar el campo';
 
     // Act
-    cy.get('input[name="user"]').as('userInput');
+    cy.findByRole('textbox').as('userInput');
     cy.get('@userInput').click();
     cy.get('@userInput').blur();
 
@@ -45,7 +45,7 @@ describe('login scene specs', () => {
     const errorMsg = 'Debe informar el campo';
 
     // Act
-    cy.get('input[name="password"]').as('passwordInput');
+    cy.findByLabelText('Contraseña *').as('passwordInput');
     cy.get('@passwordInput').click();
     cy.get('@passwordInput').blur();
 

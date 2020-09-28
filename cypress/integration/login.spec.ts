@@ -7,29 +7,32 @@ describe('login scene specs', () => {
     // Arrange
 
     // Act
-    cy.get('input[name="user"]').click();
+    cy.get('input[name="user"]').as('userInput');
+    cy.get('@userInput').click();
 
     // Asert
-    cy.get('input[name="user"]').should('have.focus');
+    cy.get('@userInput').should('have.focus');
   });
 
   it('"password" input should get the focus when clicking on it', () => {
     // Arrange
 
     // Act
-    cy.get('input[name="password"]').click();
+    cy.get('input[name="password"]').as('passwordInput');
+    cy.get('@passwordInput').click();
 
     // Asert
-    cy.get('input[name="password"]').should('have.focus');
+    cy.get('@passwordInput').should('have.focus');
   });
 
-  it('"user" input should show error message "Debe informar el campo" when blur after clicking on it', () => {
+  it('"user" input should show error message when blur after clicking on it', () => {
     // Arrange
     const errorMsg = 'Debe informar el campo';
 
     // Act
-    cy.get('input[name="user"]').click();
-    cy.get('input[name="user"]').blur();
+    cy.get('input[name="user"]').as('userInput');
+    cy.get('@userInput').click();
+    cy.get('@userInput').blur();
 
     // Asert
     cy.get(
@@ -37,13 +40,14 @@ describe('login scene specs', () => {
     ).should('have.text', errorMsg);
   });
 
-  it('"password" input should show error message "Debe informar el campo" when blur after clicking on it', () => {
+  it('"password" input should show error message when blur after clicking on it', () => {
     // Arrange
     const errorMsg = 'Debe informar el campo';
 
     // Act
-    cy.get('input[name="password"]').click();
-    cy.get('input[name="password"]').blur();
+    cy.get('input[name="password"]').as('passwordInput');
+    cy.get('@passwordInput').click();
+    cy.get('@passwordInput').blur();
 
     // Asert
     cy.get(

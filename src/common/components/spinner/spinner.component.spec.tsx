@@ -47,7 +47,7 @@ describe('spinner component spec', () => {
     expect(spinnerElement).toEqual(null);
   });
 
-  it('should not be displayed when "promiseInProgress" feeds "null"', () => {
+  it('Should not be displayed when "promiseInProgress" feeds "null"', () => {
     // Arrange
     jest
       .spyOn(promiseTracker, 'usePromiseTracker')

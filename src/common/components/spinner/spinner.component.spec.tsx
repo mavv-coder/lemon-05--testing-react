@@ -4,6 +4,17 @@ import { SpinnerComponent } from './spinner.component';
 import * as promiseTracker from 'react-promise-tracker/lib/trackerHook';
 
 describe('spinner component spec', () => {
+  it('should not be displayed by default', () => {
+    // Arrange
+
+    // Act
+    render(<SpinnerComponent />);
+    const spinnerElement = screen.queryByRole('status');
+
+    // Assert
+    expect(spinnerElement).toEqual(null);
+  });
+
   it('should be displayed when "promiseInProgress" is "true"', () => {
     // Arrange
     jest
@@ -12,9 +23,55 @@ describe('spinner component spec', () => {
 
     // Act
     render(<SpinnerComponent />);
-    const element = screen.getByRole('status');
+    const spinnerElement = screen.getByRole('status');
 
     // Assert
-    expect(element).toBeInTheDocument();
+    expect(spinnerElement).toBeInTheDocument();
+  });
+
+  it('should not be displayed when "promiseInProgress" become "false" after being "true"', () => {
+    // Arrange
+    jest
+      .spyOn(promiseTracker, 'usePromiseTracker')
+      .mockImplementation(() => ({ promiseInProgress: true }));
+
+    jest
+      .spyOn(promiseTracker, 'usePromiseTracker')
+      .mockImplementation(() => ({ promiseInProgress: false }));
+
+    // Act
+    render(<SpinnerComponent />);
+    const spinnerElement = screen.queryByRole('status');
+
+    // Assert
+    expect(spinnerElement).toEqual(null);
+  });
+
+  it('should not be displayed when "promiseInProgress" feeds "null"', () => {
+    // Arrange
+    jest
+      .spyOn(promiseTracker, 'usePromiseTracker')
+      .mockImplementation(() => ({ promiseInProgress: null }));
+
+    // Act
+    render(<SpinnerComponent />);
+    const spinnerElement = screen.queryByRole('status');
+
+    // Assert
+    expect(spinnerElement).toEqual(null);
+  });
+
+  it('should not be displayed when "promiseInProgress" feeds "undefined"', () => {
+    // Arrange
+    jest
+      .spyOn(promiseTracker, 'usePromiseTracker')
+      .mockImplementation(() => ({ promiseInProgress: undefined }));
+
+    // Act
+    render(<SpinnerComponent />);
+    const spinnerElement = screen.queryByRole('status');
+
+    // Assert
+    expect(spinnerElement).toEqual(null);
   });
 });

@@ -18,7 +18,7 @@
     "prettier:fix": "npm run prettier -- --fix",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
-    "test:2e2": "cypress open"
+    "test:e2e": "cypress open"
   },
   "repository": {
     "type": "git",

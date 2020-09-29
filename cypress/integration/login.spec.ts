@@ -86,6 +86,6 @@ describe('login scene specs', () => {
     cy.get('@loginBtn').click();
 
     // Asert
-    cy.visit('submodule-list');
+    cy.url().should('equal', 'http://localhost:8080/#/submodule-list');
   });
 });

@@ -54,4 +54,38 @@ describe('login scene specs', () => {
       'p[class="MuiFormHelperText-root MuiFormHelperText-contained Mui-error"]'
     ).should('have.text', errorMsg);
   });
+
+  it('should show alert when clicking on "login" button with wrong values in the inputs', () => {
+    // Arrange
+    const userWrongValue = 'John';
+    const passwordWrongValue = '12345';
+
+    // Act
+    cy.findByRole('textbox').as('userInput');
+    cy.findByLabelText('Contraseña *').as('passwordInput');
+    cy.findByRole('button').as('loginBtn');
+    cy.get('@userInput').type(userWrongValue);
+    cy.get('@passwordInput').type(passwordWrongValue);
+    cy.get('@loginBtn').click();
+
+    // Asert
+    cy.findByRole('alert').should('be.visible');
+  });
+
+  it('should navigate to "submodule-list" after clicking "login" button with correct values in both inputs', () => {
+    // Arrange
+    const user = 'admin';
+    const password = 'test';
+
+    // Act
+    cy.findByRole('textbox').as('userInput');
+    cy.findByLabelText('Contraseña *').as('passwordInput');
+    cy.findByRole('button').as('loginBtn');
+    cy.get('@userInput').type(user);
+    cy.get('@passwordInput').type(password);
+    cy.get('@loginBtn').click();
+
+    // Asert
+    cy.visit('submodule-list');
+  });
 });

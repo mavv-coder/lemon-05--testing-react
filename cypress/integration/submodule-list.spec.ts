@@ -19,4 +19,15 @@ describe('submodule-list scene specs', () => {
     // Assert
     cy.findByRole('list').should('be.visible');
   });
+
+  it('should display user menu when clicking on "userMenu" button', () => {
+    // Arrange
+
+    // Act
+    cy.findByRole('button', { name: 'userMenu' }).as('menuBtn');
+    cy.get('@menuBtn').click();
+
+    // Assert
+    cy.findByRole('menu').should('be.visible');
+  });
 });

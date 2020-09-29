@@ -53,7 +53,7 @@ export const AppBarComponent: React.FC = () => {
           </Typography>
           <IconButton
             color="inherit"
-            aria-label="userMenu"
+            aria-label="menu-user"
             onClick={onOpenMenu}
           >
             <AccountCircle />

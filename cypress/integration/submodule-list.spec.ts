@@ -9,7 +9,7 @@ describe('submodule-list scene specs', () => {
     cy.get('@loginBtn').click();
   });
 
-  it('should display left drawer when clicking on "menu" button', () => {
+  it('should display "menu" when clicking on "menu" button', () => {
     // Arrange
 
     // Act
@@ -20,40 +20,52 @@ describe('submodule-list scene specs', () => {
     cy.findByRole('list').should('be.visible');
   });
 
-  xit('should hide left drawer when clicking anywhere except for "menu" button', () => {
+  it('should hide "menu" when pressing esc key after "menu" been displayed', () => {
     // Arrange
     // Act
+    cy.findByRole('button', { name: 'menu' }).as('menuBtn');
+    cy.get('@menuBtn').click();
+    cy.findByRole('list').should('be.visible');
+    cy.get('body').type('{esc}');
+
     // Assert
+    cy.findByRole('list').should('not.be.visible');
   });
 
-  it('should display user menu when clicking on "userMenu" button', () => {
+  it('should display "menu-user" when clicking on "menu-user" button', () => {
     // Arrange
 
     // Act
-    cy.findByRole('button', { name: 'userMenu' }).as('menuBtn');
+    cy.findByRole('button', { name: 'menu-user' }).as('menuBtn');
     cy.get('@menuBtn').click();
 
     // Assert
     cy.findByRole('menu').should('be.visible');
   });
 
-  it('should navigate to "/login" when clicking on "Cerrar sesión" button in "userMenu"', () => {
+  it('should hide "menu-user" when pressing esc key after "menu-user" been displayed', () => {
+    // Arrange
+    // Act
+    cy.findByRole('button', { name: 'menu-user' }).as('menuUserBtn');
+    cy.get('@menuUserBtn').click();
+    cy.findByRole('menu').should('be.visible');
+    cy.get('body').type('{esc}');
+
+    // Assert
+    cy.findByRole('menu').should('not.be.visible');
+  });
+
+  it('should navigate to "/login" when clicking on "Cerrar sesión" button in "menu-user"', () => {
     // Arrange
 
     // Act
-    cy.findByRole('button', { name: 'userMenu' }).as('menuBtn');
-    cy.get('@menuBtn').click();
+    cy.findByRole('button', { name: 'menu-user' }).as('menuUserBtn');
+    cy.get('@menuUserBtn').click();
     cy.findByRole('menuitem', { name: 'Cerrar sesión' }).as('logoutBtn');
     cy.get('@logoutBtn').click();
 
     // Assert
     cy.url().should('equal', 'http://localhost:8080/#/login');
-  });
-
-  xit('should hide user menu when clicking anywhere except for "menu" button', () => {
-    // Arrange
-    // Act
-    // Assert
   });
 
   it('should navigate to "/projects"  when clicking on "Proyectos" link', () => {
@@ -76,16 +88,5 @@ describe('submodule-list scene specs', () => {
 
     // Assert
     cy.url().should('equal', 'http://localhost:8080/#/employees');
-  });
-
-  xit('should navigate to "https://lemoncode.net/"  when clicking on "Lemoncode" footer link', () => {
-    // Arrange
-
-    // Act
-    cy.findByRole('link', { name: 'Lemoncode' }).as('lemoncodeLink');
-    cy.get('@lemoncodeLink').click();
-
-    // Assert
-    cy.url().should('equal', 'https://lemoncode.net/');
   });
 });

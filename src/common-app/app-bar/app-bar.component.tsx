@@ -51,7 +51,11 @@ export const AppBarComponent: React.FC = () => {
           >
             {literals.global.welcome} {userName}
           </Typography>
-          <IconButton color="inherit" aria-label="menu" onClick={onOpenMenu}>
+          <IconButton
+            color="inherit"
+            aria-label="userMenu"
+            onClick={onOpenMenu}
+          >
             <AccountCircle />
           </IconButton>
           <Menu open={isOpen} onClose={onCloseMenu} anchorEl={menuElement}>

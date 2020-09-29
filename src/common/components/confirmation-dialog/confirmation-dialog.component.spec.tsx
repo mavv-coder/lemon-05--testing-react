@@ -218,38 +218,4 @@ describe('confirmation dialog component specs', () => {
     expect(props.onClose).toHaveBeenCalled();
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
-
-  xit('when "acceptButton" is clicked, the entire component should not be displayed', () => {
-    // Arrange
-    const { result } = renderHook(() => useConfirmationDialog());
-
-    const props = {
-      isOpen: true,
-      onAccept: jest.spyOn(result.current, 'onClose').getMockImplementation(),
-      onClose: jest.spyOn(result.current, 'onClose').getMockImplementation(),
-      title: 'test title',
-      labels: {
-        closeButton: 'test close btn',
-        acceptButton: 'test accept btn',
-      },
-    };
-
-    // Act
-    render(
-      <ConfirmationDialogComponent {...props}>
-        <span>test children</span>
-      </ConfirmationDialogComponent>
-    );
-
-    result.current.onClose();
-
-    const closeButtonElement = screen.queryByRole('button', {
-      name: props.labels.acceptButton,
-    });
-
-    userEvent.click(closeButtonElement);
-    // Assert
-
-    expect(props.isOpen).toEqual(false);
-  });
 });

@@ -15,16 +15,15 @@ describe('confirmation dialog hook specs', () => {
 
   it('"itemToDelete" state should be an empty object with "Lookup" interface by default', () => {
     // Arrange
-    const emptyItem: Lookup = {
-      id: '',
-      name: '',
-    };
 
     // Act
     const { result } = renderHook(() => useConfirmationDialog());
 
     // Assert
-    expect(result.current.itemToDelete).toEqual(emptyItem);
+    expect(result.current.itemToDelete).toEqual<Lookup>({
+      id: '',
+      name: '',
+    });
   });
 
   it('"onAccept", "onClose" and "onOpenDialog" should be functions by default', () => {

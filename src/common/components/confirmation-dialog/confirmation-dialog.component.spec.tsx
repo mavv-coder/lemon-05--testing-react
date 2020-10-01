@@ -1,9 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderHook } from '@testing-library/react-hooks';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
-import { useConfirmationDialog } from './confirmation-dialog.hook';
 
 describe('confirmation dialog component specs', () => {
   it('should be displayed when it feeds "isOpen" property with "true" value', () => {
@@ -82,83 +80,7 @@ describe('confirmation dialog component specs', () => {
     expect(acceptButtonElement).toEqual(null);
   });
 
-  it('should not be displayed when it feeds "isOpen" property with "undefined" value', () => {
-    // Arrange
-    const props = {
-      isOpen: undefined,
-      onAccept: jest.fn(),
-      onClose: jest.fn(),
-      title: 'test title',
-      labels: {
-        closeButton: 'test close btn',
-        acceptButton: 'test accept btn',
-      },
-    };
-
-    // Act
-    render(
-      <ConfirmationDialogComponent {...props}>
-        <span>test children</span>
-      </ConfirmationDialogComponent>
-    );
-
-    const dialogElement = screen.queryByRole('dialog');
-    const dialogTitleElement = screen.queryByText(props.title);
-    const dialogContentElement = screen.queryByText('test children');
-    const closeButtonElement = screen.queryByRole('button', {
-      name: props.labels.closeButton,
-    });
-    const acceptButtonElement = screen.queryByRole('button', {
-      name: props.labels.acceptButton,
-    });
-
-    // Assert
-    expect(dialogElement).toEqual(null);
-    expect(dialogTitleElement).toEqual(null);
-    expect(dialogContentElement).toEqual(null);
-    expect(closeButtonElement).toEqual(null);
-    expect(acceptButtonElement).toEqual(null);
-  });
-
-  it('should not be displayed when it feeds "isOpen" property with "null" value', () => {
-    // Arrange
-    const props = {
-      isOpen: null,
-      onAccept: jest.fn(),
-      onClose: jest.fn(),
-      title: 'test title',
-      labels: {
-        closeButton: 'test close btn',
-        acceptButton: 'test accept btn',
-      },
-    };
-
-    // Act
-    render(
-      <ConfirmationDialogComponent {...props}>
-        <span>test children</span>
-      </ConfirmationDialogComponent>
-    );
-
-    const dialogElement = screen.queryByRole('dialog');
-    const dialogTitleElement = screen.queryByText(props.title);
-    const dialogContentElement = screen.queryByText('test children');
-    const closeButtonElement = screen.queryByRole('button', {
-      name: props.labels.closeButton,
-    });
-    const acceptButtonElement = screen.queryByRole('button', {
-      name: props.labels.acceptButton,
-    });
-
-    // Assert
-    expect(dialogElement).toEqual(null);
-    expect(dialogTitleElement).toEqual(null);
-    expect(dialogContentElement).toEqual(null);
-    expect(closeButtonElement).toEqual(null);
-    expect(acceptButtonElement).toEqual(null);
-  });
-
-  it('only when "closeButton" is clicked, "onClose" function should be called one time per click', () => {
+  it('when "closeButton" is clicked, "onClose" function should be called one time per click', () => {
     // Arrange
     const props = {
       isOpen: true,
@@ -187,7 +109,7 @@ describe('confirmation dialog component specs', () => {
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('only when "acceptButton" is clicked, "onAccept" and "onClose" funtions should be called one time per click', () => {
+  it('when "acceptButton" is clicked, "onAccept" and "onClose" funtions should be called one time per click', () => {
     // Arrange
     const props = {
       isOpen: true,

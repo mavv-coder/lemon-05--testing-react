@@ -68,7 +68,7 @@ describe('submodule-list scene specs', () => {
     cy.url().should('equal', 'http://localhost:8080/#/login');
   });
 
-  it('should navigate to "/projects"  when clicking on "Proyectos" link', () => {
+  it('should navigate to "/projects" when clicking on "Proyectos" link', () => {
     // Arrange
 
     // Act
@@ -79,7 +79,7 @@ describe('submodule-list scene specs', () => {
     cy.url().should('equal', 'http://localhost:8080/#/projects');
   });
 
-  it('should navigate to "/employees"  when clicking on "Proyectos" link', () => {
+  it('should navigate to "/employees" when clicking on "Proyectos" link', () => {
     // Arrange
 
     // Act

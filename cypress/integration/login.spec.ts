@@ -25,7 +25,7 @@ describe('login scene specs', () => {
     cy.get('@passwordInput').should('have.focus');
   });
 
-  it('"user" input should show error message when blur after clicking on it', () => {
+  it('if "user" input is empty, it should show error message when blur after clicking on it', () => {
     // Arrange
     const errorMsg = 'Debe informar el campo';
 
@@ -40,7 +40,7 @@ describe('login scene specs', () => {
     ).should('have.text', errorMsg);
   });
 
-  it('"password" input should show error message when blur after clicking on it', () => {
+  it('if "password" input is empty, it should show error message when blur after clicking on it', () => {
     // Arrange
     const errorMsg = 'Debe informar el campo';
 

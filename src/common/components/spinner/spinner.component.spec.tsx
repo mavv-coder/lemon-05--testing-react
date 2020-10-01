@@ -46,32 +46,4 @@ describe('spinner component spec', () => {
     // Assert
     expect(spinnerElement).toEqual(null);
   });
-
-  it('Should not be displayed when "promiseInProgress" feeds "null"', () => {
-    // Arrange
-    jest
-      .spyOn(promiseTracker, 'usePromiseTracker')
-      .mockImplementation(() => ({ promiseInProgress: null }));
-
-    // Act
-    render(<SpinnerComponent />);
-    const spinnerElement = screen.queryByRole('status');
-
-    // Assert
-    expect(spinnerElement).toEqual(null);
-  });
-
-  it('should not be displayed when "promiseInProgress" feeds "undefined"', () => {
-    // Arrange
-    jest
-      .spyOn(promiseTracker, 'usePromiseTracker')
-      .mockImplementation(() => ({ promiseInProgress: undefined }));
-
-    // Act
-    render(<SpinnerComponent />);
-    const spinnerElement = screen.queryByRole('status');
-
-    // Assert
-    expect(spinnerElement).toEqual(null);
-  });
 });
